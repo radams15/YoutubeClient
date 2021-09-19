@@ -5,6 +5,9 @@
 #include "MainApplication.h"
 #include "../youtube/CSubs.h"
 
+#include <stdio.h>
+#include <stdarg.h>
+
 GtkBuilder* builder;
 CSubs* subs;
 
@@ -29,7 +32,13 @@ void play_video_button_clicked(GtkButton* button, gpointer data){
 
     CFormats fmts = cvideo_get_formats(*vid);
 
-    printf("Play: %s\n", fmts.formats[0].url);
+    char buffer[1024];
+
+    sprintf(buffer, "flatpak run com.github.rafostar.Clapper '%s'&", fmts.formats[0].url);
+
+    buffer[strlen("flatpak run com.github.rafostar.Clapper ''&")+strlen(fmts.formats[0].url)+1] = 0;
+
+    system(buffer);    
 }
 
 void add_feed_item(CVideo* vid){
