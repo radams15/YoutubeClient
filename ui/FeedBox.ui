@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkBox" id="main_box">
+    <property name="visible">1</property>
+    <property name="can-focus">0</property>
+    <property name="margin-start">6</property>
+    <property name="margin-top">6</property>
+    <property name="margin-bottom">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkBox" id="source_box">
+        <property name="visible">1</property>
+        <property name="can-focus">0</property>
+        <property name="hexpand">1</property>
+        <child>
+          <object class="GtkBox" id="avatar_container">
+            <property name="visible">1</property>
+            <property name="can-focus">0</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="date_label">
+                <property name="visible">1</property>
+                <property name="can-focus">0</property>
+                <property name="halign">end</property>
+                <property name="label">date</property>
+                <property name="justify">right</property>
+                <property name="wrap">1</property>
+                <property name="wrap-mode">word-char</property>
+                <style>
+                  <class name="subtitle"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">1</property>
+            <property name="can-focus">0</property>
+            <property name="margin-start">6</property>
+            <property name="hexpand">1</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">3</property>
+            <child>
+              <object class="GtkLabel" id="title_label">
+                <property name="visible">1</property>
+                <property name="can-focus">0</property>
+                <property name="halign">start</property>
+                <property name="label">video title</property>
+                <property name="ellipsize">end</property>
+                <attributes>
+                  <attribute name="weight" value="bold"></attribute>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="author_label">
+                <property name="visible">1</property>
+                <property name="can-focus">0</property>
+                <property name="halign">start</property>
+                <property name="label">author</property>
+                <property name="ellipsize">end</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox" id="image_container">
+        <property name="visible">1</property>
+        <property name="can-focus">0</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox" id="controls_box">
+        <property name="visible">1</property>
+        <property name="can-focus">0</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkBox" id="extra_controls_box">
+            <property name="visible">1</property>
+            <property name="can-focus">0</property>
+            <property name="halign">start</property>
+            <property name="hexpand">1</property>
+            <child>
+              <object class="GtkButton" id="play_btn">
+                <property name="visible">1</property>
+                <property name="can-focus">0</property>
+                <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Open link</property>
+                <property name="hexpand">1</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">1</property>
+                    <property name="can-focus">0</property>
+                    <property name="icon-name">media-playback-start</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="save_btn">
+                <property name="visible">1</property>
+                <property name="can-focus">0</property>
+                <property name="receives-default">1</property>
+                <property name="tooltip-text" translatable="yes">Save</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">1</property>
+                    <property name="can-focus">0</property>
+                    <property name="icon-name">document-save-symbolic</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <style>
+              <class name="linked"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
