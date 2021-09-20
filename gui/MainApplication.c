@@ -5,6 +5,8 @@
 #include "MainApplication.h"
 #include "../youtube/CSubs.h"
 
+#include <gio/gio.h>
+
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -27,18 +29,20 @@ void on_headerbar_squeezer_notify(AdwSqueezer* squeezer, GdkEvent* event){
     }
 }
 
+void play_video(const char* url){
+    GFile* file = g_file_new_for_uri(url);
+    GtkMediaStream* stream = gtk_media_file_new_for_file(file);
+
+    adw_view_stack_set_visible_child_name(ADW_VIEW_STACK(gtk_builder_get_object(builder, "main_stack")),"player_page");
+
+    gtk_video_set_media_stream(GTK_VIDEO(gtk_builder_get_object(builder, "player")), stream);
+    gtk_video_set_autoplay(GTK_VIDEO(gtk_builder_get_object(builder, "player")), true);
+}
+
 void play_video_button_clicked(GtkButton* button, gpointer data){
-    CVideo* vid = data;
+    CFormats fmts = cvideo_get_formats(*((CVideo*) data));
 
-    CFormats fmts = cvideo_get_formats(*vid);
-
-    char buffer[1024];
-
-    sprintf(buffer, "flatpak run com.github.rafostar.Clapper '%s'&", fmts.formats[0].url);
-
-    buffer[strlen("flatpak run com.github.rafostar.Clapper ''&")+strlen(fmts.formats[0].url)+1] = 0;
-
-    system(buffer);    
+    play_video(fmts.formats[0].url);
 }
 
 void add_feed_item(CVideo* vid){
