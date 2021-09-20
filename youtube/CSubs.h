@@ -32,6 +32,10 @@ typedef struct {
 } CFormats;
 
 typedef void CSubs;
+typedef void CChannel;
+
+CChannel* channel_new_from_name(const char* name);
+CVideos channel_get_vids(CChannel* channel);
 
 CSubs* subs_new(const char* file);
 

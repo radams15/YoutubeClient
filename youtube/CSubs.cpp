@@ -16,6 +16,35 @@ const char* str2chars(std::string str){
     return writable;
 }
 
+extern "C" CChannel* channel_new_from_name(const char* name){
+    auto* out = Channel::new_from_name(name);
+
+    return (CChannel*) out;
+}
+
+extern "C" CVideos channel_get_vids(CChannel* channel){
+    std::vector<Video*>* vids = ((Channel*)channel)->get_vids();
+
+    CVideos out;
+    out.length = vids->size();
+    out.vids = new CVideo[out.length];
+
+    for(int i=0 ; i<out.length ; i++){
+        auto vid = *vids->at(i);
+        out.vids[i] = {
+                str2chars(vid.link),
+                str2chars(vid.title),
+                str2chars(vid.channel_name),
+                str2chars(vid.channel_id),
+                str2chars(vid.description),
+                str2chars(vid.publish_date),
+                str2chars(vid.thumbnail),
+        };
+    }
+
+    return out;
+}
+
 extern "C" CSubs* subs_new(const char* file){
     auto* out = new Subscriptions(std::string(file));
 

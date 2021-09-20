@@ -1,0 +1,26 @@
+app-id: com.chev.Youtube
+runtime: org.gnome.Platform
+runtime-version: '40'
+sdk: org.gnome.Sdk
+
+command: Youtube
+
+finish-args: 
+ - "--device=dri"
+ - "--share=ipc"
+ - "--socket=fallback-x11"
+ - "--share=network"
+ - "--socket=wayland"
+ - "--socket=system-bus"
+
+modules:
+  - name: Youtube
+    buildsystem: cmake
+    config-opts:
+      - "-DCMAKE_BUILD_TYPE=Release"
+    sources:
+      - type: git
+        url: https://github.com/radams15/YoutubeClient.git
+        commit: 537faf153d44b00bd23f41a9700971db0ee18cd6
+
+  - libadwaita.json

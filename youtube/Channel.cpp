@@ -4,16 +4,18 @@
 
 #include "Channel.h"
 
-#include <cpr/cpr.h>
 #include <iostream>
+
 #include <libxml++/libxml++.h>
 #include <libxml/parser.h>
 
+#include "Net.h"
+
 Channel* Channel::new_from_name(std::string name) {
-    cpr::Response res = cpr::Get(cpr::Url{"https://www.youtube.com/c/"+name+"/featured"}, cpr::VerifySsl{false});
+    Net::Resp res = Net::get("https://www.youtube.com/c/"+name+"/featured");
 
     if(res.status_code != 200){
-        std::cerr << "FAIL to get channel id URL" << std::endl;
+        std::cerr << "FAIL to get channel id URL with error code: " << res.status_code << std::endl;
         return nullptr;
     }
 
@@ -38,7 +40,8 @@ Channel::Channel(std::string id) {
 
 std::string Channel::get_name() {
     if(name.empty()) {
-        cpr::Response res = cpr::Get(cpr::Url{"https://www.youtube.com/feeds/videos.xml?channel_id=" + id}, cpr::VerifySsl{false});
+        Net::Resp res = Net::get("https://www.youtube.com/feeds/videos.xml?channel_id=" + id);
+
 
         if(res.status_code != 200) {
             std::cerr << "FAIL to get channel name URL" << std::endl;
@@ -89,7 +92,8 @@ void make_video(const xmlpp::Node* node, Video* vid, int level){
 std::vector<Video*>* Channel::get_vids() {
     auto* out = new std::vector<Video*>;
 
-    cpr::Response res = cpr::Get(cpr::Url{"https://www.youtube.com/feeds/videos.xml?channel_id=" + id}, cpr::VerifySsl{false});
+    Net::Resp res = Net::get("https://www.youtube.com/feeds/videos.xml?channel_id=" + id);
+
 
     if(res.status_code != 200){
         std::cerr << "FAIL to get vids URL: RETURN " << res.status_code << std::endl;
