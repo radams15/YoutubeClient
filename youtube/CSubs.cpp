@@ -7,6 +7,7 @@
 #include "Subscriptions.h"
 
 #include <string>
+#include <iostream>
 
 const char* str2chars(std::string str){
     char * writable = new char[str.size() + 1];
@@ -16,22 +17,30 @@ const char* str2chars(std::string str){
     return writable;
 }
 
-extern "C" CChannel* channel_new_from_name(const char* name){
+extern "C" void* channel_new_from_name(const char* name){
     auto* out = Channel::new_from_name(name);
 
-    return (CChannel*) out;
+    return (void*) out;
 }
 
-extern "C" CVideos channel_get_vids(CChannel* channel){
+extern "C" const char* channel_get_name(void* channel){
+    return str2chars( ((Channel*)channel)->get_name());
+}
+
+extern "C" const char* channel_get_id(void* channel){
+    return str2chars( ((Channel*)channel)->id);
+}
+
+extern "C" CVideos channel_get_vids(void* channel){
     std::vector<Video*>* vids = ((Channel*)channel)->get_vids();
 
     CVideos out;
     out.length = vids->size();
-    out.vids = new CVideo[out.length];
+    out.data = new CVideo[out.length];
 
     for(int i=0 ; i<out.length ; i++){
         auto vid = *vids->at(i);
-        out.vids[i] = {
+        out.data[i] = {
                 str2chars(vid.link),
                 str2chars(vid.title),
                 str2chars(vid.channel_name),
@@ -56,11 +65,11 @@ extern "C" CVideos subs_get_videos(CSubs *subs) {
 
     CVideos out;
     out.length = vids->size();
-    out.vids = new CVideo[out.length];
+    out.data = new CVideo[out.length];
 
     for(int i=0 ; i<out.length ; i++){
         auto vid = *vids->at(i);
-        out.vids[i] = {
+        out.data[i] = {
                 str2chars(vid.link),
                 str2chars(vid.title),
                 str2chars(vid.channel_name),
@@ -79,11 +88,12 @@ extern "C" CFormats cvideo_get_formats(CVideo vid){
 
     CFormats out;
     out.length = fmts->size();
-    out.formats = new CFormat[out.length];
+    out.data = new CFormat[out.length];
 
     for(int i=0 ; i<out.length ; i++){
         auto fmt = fmts->at(i);
-        out.formats[i] = {
+        std::cout << "URL:" << fmt.url << std::endl;
+        out.data[i] = {
                 str2chars(fmt.url),
                 str2chars(fmt.format)
         };
@@ -92,9 +102,31 @@ extern "C" CFormats cvideo_get_formats(CVideo vid){
     return out;
 }
 
+extern "C" CChannels subs_get_channels(CSubs* subs){
+    std::vector<Channel*>* channels = ((Subscriptions*) subs)->subs;
+
+    CChannels out;
+    out.length = channels->size();
+
+    Channel** chans = channels->data();
+
+    out.data = (CChannel**) chans;
+
+    return out;
+}
+
+extern "C" void subs_save(CSubs* subs){
+    ((Subscriptions* ) subs)->save();
+}
+
+extern "C" void subs_remove(CSubs* subs, const char* id){
+    ((Subscriptions* ) subs)->remove(std::string(id));
+}
+
+
 extern "C" void cvideos_free(CVideos vids) {
     for(int i=0 ; i<vids.length ; i++){
-        CVideo vid = vids.vids[i];
+        CVideo vid = vids.data[i];
         free((void*) vid.link);
         free((void*) vid.title);
         free((void*) vid.channel_name);
@@ -107,7 +139,7 @@ extern "C" void cvideos_free(CVideos vids) {
 
 extern "C" void cformats_free(CFormats fmts){
     for(int i=0 ; i<fmts.length ; i++){
-        CFormat fmt = fmts.formats[i];
+        CFormat fmt = fmts.data[i];
         free((void*) fmt.format);
         free((void*) fmt.url);
     }

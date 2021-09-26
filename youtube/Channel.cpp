@@ -66,11 +66,6 @@ void make_video(const xmlpp::Node* node, Video* vid, int level){
     for(auto i : node->get_children()){
         auto key = i->get_name();
 
-        //const auto nodeText = dynamic_cast<const xmlpp::TextNode*>(i);
-        //const auto nodeComment = dynamic_cast<const xmlpp::CommentNode*>(i);
-        //const auto nodeContent = dynamic_cast<const xmlpp::ContentNode*>(i);
-        //const xmlpp::Element* nodeElement = dynamic_cast<const xmlpp::Element*>(i)
-
         if(key == "group"){
             make_video(i, vid, level+1);
         } else if(key == "link"){
@@ -94,9 +89,8 @@ std::vector<Video*>* Channel::get_vids() {
 
     Net::Resp res = Net::get("https://www.youtube.com/feeds/videos.xml?channel_id=" + id);
 
-
     if(res.status_code != 200){
-        std::cerr << "FAIL to get vids URL: RETURN " << res.status_code << std::endl;
+        std::cerr << "FAIL to get data URL: RETURN " << res.status_code << std::endl;
         return nullptr;
     }
 

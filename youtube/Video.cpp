@@ -37,7 +37,7 @@ std::vector<Format>* Video::get_formats() {
 std::vector<Format> *Video::get_formats(std::string link) {
     auto* out = new std::vector<Format>;
 
-    std::string output = exec("youtube-dl -j " + link);
+    std::string output = exec("yt-dlp -j " + link);
 
     json info = json::parse(output);
 
@@ -45,9 +45,10 @@ std::vector<Format> *Video::get_formats(std::string link) {
         std::string acodec = form["acodec"];
         std::string vcodec = form["vcodec"];
 
-        if(acodec == "none" or vcodec == "none"){
+        if(acodec == "none" or vcodec == "none" or vcodec == "mp4v.20.3"){
             continue;
         }
+
         out->push_back(Format{form["url"], form["format_note"]});
     }
 

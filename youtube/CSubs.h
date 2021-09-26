@@ -17,7 +17,7 @@ typedef struct {
 } CVideo;
 
 typedef struct {
-    CVideo* vids;
+    CVideo* data;
     int length;
 } CVideos;
 
@@ -27,21 +27,29 @@ typedef struct {
 } CFormat;
 
 typedef struct {
-    CFormat* formats;
+    CFormat* data;
     int length;
 } CFormats;
 
 typedef void CSubs;
 typedef void CChannel;
 
-CChannel* channel_new_from_name(const char* name);
-CVideos channel_get_vids(CChannel* channel);
+typedef struct {
+    CChannel** data;
+    int length;
+} CChannels;
+
+void* channel_new_from_name(const char* name);
+CVideos channel_get_vids(void* channel);
+const char* channel_get_name(void* channel);
+const char* channel_get_id(void* channel);
 
 CSubs* subs_new(const char* file);
-
+CChannels subs_get_channels(CSubs* subs);
 CVideos subs_get_videos(CSubs* subs);
-
 CFormats cvideo_get_formats(CVideo vid);
+void subs_save(CSubs* subs);
+void subs_remove(CSubs* subs, const char* id);
 
 void cvideos_free(CVideos vids);
 void cformats_free(CFormats fmts);

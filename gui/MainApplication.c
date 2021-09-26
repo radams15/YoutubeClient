@@ -8,7 +8,6 @@
 #include <gio/gio.h>
 
 #include <stdio.h>
-#include <stdarg.h>
 
 GtkBuilder* builder;
 CSubs* subs;
@@ -33,16 +32,24 @@ void play_video(const char* url){
     GFile* file = g_file_new_for_uri(url);
     GtkMediaStream* stream = gtk_media_file_new_for_file(file);
 
-    adw_view_stack_set_visible_child_name(ADW_VIEW_STACK(gtk_builder_get_object(builder, "main_stack")),"player_page");
-
     gtk_video_set_media_stream(GTK_VIDEO(gtk_builder_get_object(builder, "player")), stream);
     gtk_video_set_autoplay(GTK_VIDEO(gtk_builder_get_object(builder, "player")), true);
+
+    adw_view_stack_set_visible_child_name(ADW_VIEW_STACK(gtk_builder_get_object(builder, "main_stack")),"player_page");
 }
 
 void play_video_button_clicked(GtkButton* button, gpointer data){
     CFormats fmts = cvideo_get_formats(*((CVideo*) data));
 
-    play_video(fmts.formats[0].url);
+    if(fmts.length > 0) {
+        play_video(fmts.data[0].url);
+    }else{
+        fprintf(stderr, "Cannot get any formats for video %s\n", ((CVideo*) data)->link);
+    }
+}
+
+void del_sub_button_clicked(GtkButton* button, gpointer data){
+    subs_remove(subs, (const char*) data);
 }
 
 void add_feed_item(CVideo* vid){
@@ -61,11 +68,34 @@ void add_feed_item(CVideo* vid){
     gtk_list_box_prepend(GTK_LIST_BOX(gtk_builder_get_object(builder, "feed_box")), box);
 }
 
+void add_sub_item(CChannel* chan){
+    GtkBuilder* new_builder = gtk_builder_new_from_file("../ui/SubBox.ui");
+
+    GtkWidget* box = GTK_WIDGET(gtk_builder_get_object(new_builder, "main_box"));
+
+    gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(new_builder, "channel_name")), channel_get_name(chan));
+
+    GtkButton* delbtn = GTK_BUTTON(gtk_builder_get_object(new_builder, "delete_btn"));
+
+    g_signal_connect(delbtn, "clicked", G_CALLBACK (del_sub_button_clicked), (gpointer) channel_get_id(chan));
+
+    gtk_list_box_append(GTK_LIST_BOX(gtk_builder_get_object(builder, "sub_box")), box);
+}
+
 void load_feed(){
     CVideos vids = subs_get_videos(subs);
 
     for(int i=0 ; i<vids.length ; i++){
-        add_feed_item(&(vids.vids[i]));
+        add_feed_item(&(vids.data[i]));
+    }
+}
+
+void load_subs(){
+    CChannels channels = subs_get_channels(subs);
+
+    for(int i=0 ; i<channels.length ; i++){
+        CChannel* channel = channels.data[i];
+        add_sub_item(channel);
     }
 }
 
@@ -80,6 +110,7 @@ void activate (GtkApplication* app, gpointer user_data){
     gtk_window_present(win);
 
     load_feed();
+    load_subs();
 }
 
 int app_run (int argc, char **argv){
@@ -94,6 +125,8 @@ int app_run (int argc, char **argv){
     g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
     status = g_application_run (G_APPLICATION (app), argc, argv);
     g_object_unref (app);
+
+    subs_save(subs);
 
     return status;
 }

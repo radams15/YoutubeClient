@@ -4740,7 +4740,7 @@ namespace nlohmann
 {
 namespace detail
 {
-/// the supported input formats
+/// the supported input data
 enum class input_format_t { json, cbor, msgpack, ubjson, bson };
 
 ////////////////////
@@ -5262,7 +5262,7 @@ struct json_sax
     @brief the beginning of an object was read
     @param[in] elements  number of object elements or -1 if unknown
     @return whether parsing should proceed
-    @note binary formats may report the number of elements
+    @note binary data may report the number of elements
     */
     virtual bool start_object(std::size_t elements) = 0;
 
@@ -5284,7 +5284,7 @@ struct json_sax
     @brief the beginning of an array was read
     @param[in] elements  number of array elements or -1 if unknown
     @return whether parsing should proceed
-    @note binary formats may report the number of elements
+    @note binary data may report the number of elements
     */
     virtual bool start_array(std::size_t elements) = 0;
 
@@ -16587,7 +16587,7 @@ default; will be used in @ref number_integer_t)
 @tparam NumberFloatType type for JSON floating-point numbers (`double` by
 default; will be used in @ref number_float_t)
 @tparam BinaryType type for packed binary data for compatibility with binary
-serialization formats (`std::vector<std::uint8_t>` by default; will be used in
+serialization data (`std::vector<std::uint8_t>` by default; will be used in
 @ref binary_t)
 @tparam AllocatorType type of the allocator to use (`std::allocator` by
 default)
@@ -17330,14 +17330,14 @@ class basic_json
     @brief a type for a packed binary type
 
     This type is a type designed to carry binary data that appears in various
-    serialized formats, such as CBOR's Major Type 2, MessagePack's bin, and
+    serialized data, such as CBOR's Major Type 2, MessagePack's bin, and
     BSON's generic binary subtype. This type is NOT a part of standard JSON and
     exists solely for compatibility with these binary types. As such, it is
     simply defined as an ordered sequence of zero or more byte values.
 
     Additionally, as an implementation detail, the subtype of the binary data is
     carried around as a `std::uint8_t`, which is compatible with both of the
-    binary data formats that use binary subtyping, (though the specific
+    binary data data that use binary subtyping, (though the specific
     numbering is incompatible with each other, and it is up to the user to
     translate between them).
 
@@ -18140,9 +18140,9 @@ class basic_json
     @brief explicitly create a binary array (without subtype)
 
     Creates a JSON binary array value from a given binary container. Binary
-    values are part of various binary formats, such as CBOR, MessagePack, and
+    values are part of various binary data, such as CBOR, MessagePack, and
     BSON. This constructor is used to create a value for serialization to those
-    formats.
+    data.
 
     @note Note, this function exists because of the difficulty in correctly
     specifying the correct template overload in the standard value ctor, as both
@@ -18176,9 +18176,9 @@ class basic_json
     @brief explicitly create a binary array (with subtype)
 
     Creates a JSON binary array value from a given binary container. Binary
-    values are part of various binary formats, such as CBOR, MessagePack, and
+    values are part of various binary data, such as CBOR, MessagePack, and
     BSON. This constructor is used to create a value for serialization to those
-    formats.
+    data.
 
     @note Note, this function exists because of the difficulty in correctly
     specifying the correct template overload in the standard value ctor, as both
@@ -23711,7 +23711,7 @@ class basic_json
           serialized properly. This behavior differs from the @ref dump()
           function which serializes NaN or Infinity to `null`.
 
-    @note The optimized formats for containers are supported: Parameter
+    @note The optimized data for containers are supported: Parameter
           @a use_size adds size information to the beginning of a container and
           removes the closing marker. Parameter @a use_type further checks
           whether all elements of a container have the same type and adds the

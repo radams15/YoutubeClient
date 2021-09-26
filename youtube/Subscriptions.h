@@ -18,14 +18,17 @@ private:
     std::string file;
 
     void load();
-    void save();
 
 public:
+    void save();
+
     std::vector<Channel*>* subs;
 
     Subscriptions(std::string file);
 
     std::vector<Video*>* get_vids();
+
+    void remove(std::string id);
 };
 
 
