@@ -55,15 +55,15 @@ static pthread_mutex_t mutex;
 void* get_vid(void* ptr){
     auto* v = (VidData*) ptr;
 
-    //pthread_mutex_lock(&mutex);
+    pthread_mutex_lock(&mutex);
 
     auto c_vids = v->c->get_vids();
 
     v->out->insert(v->out->end(), c_vids->begin(), c_vids->end());
 
-    //pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutex);
 
-    //pthread_exit(NULL);
+    pthread_exit(NULL);
 }
 
 std::vector<Video*>* Subscriptions::get_vids() {
@@ -74,20 +74,17 @@ std::vector<Video*>* Subscriptions::get_vids() {
     for(auto c : *subs){
         threads.push_back(0);
 
-        VidData v = {
-                c,
-                out
-        };
+        auto* v = new VidData;
+        v->c = c;
+        v->out = out;
 
-        //pthread_create(&threads[threads.size()-1], NULL, get_vid, &v);
-
-        get_vid(&v);
+        pthread_create(&threads[threads.size()-1], NULL, get_vid, v);
     }
 
-    /*for(auto t : threads){
+    for(auto t : threads){
         void* status;
         pthread_join(t, &status);
-    }*/
+    }
 
     sort(out->begin(), out->end(), [](Video* a, Video* b) -> bool{
         return a->publish_date < b->publish_date;

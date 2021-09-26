@@ -92,7 +92,7 @@ extern "C" CFormats cvideo_get_formats(CVideo vid){
 
     for(int i=0 ; i<out.length ; i++){
         auto fmt = fmts->at(i);
-        std::cout << "URL:" << fmt.url << std::endl;
+
         out.data[i] = {
                 str2chars(fmt.url),
                 str2chars(fmt.format)
