@@ -8,7 +8,7 @@ pkg_check_modules(GTK REQUIRED gtk4)
 pkg_check_modules(CURL REQUIRED libcurl)
 pkg_check_modules(GIO REQUIRED gio-2.0)
 pkg_check_modules(HDY REQUIRED libadwaita-1)
-pkg_check_modules(XML REQUIRED libxml-2.0)
+pkg_check_modules(XML REQUIRED libxml++-2.6)
 
 include_directories(${CURL_INCLUDE_DIRS} ${GTK_INCLUDE_DIRS} ${GIO_INCLUDE_DIRS} ${GTKMM_INCLUDE_DIRS} ${HDY_INCLUDE_DIRS} ${XML_INCLUDE_DIRS} ${GST_INCLUDE_DIRS})
 link_directories(${CURL_LIBRARY_DIRS} ${GTK_LIBRARY_DIRS} ${GIO_LIBRARY_DIRS} ${GTKMM_LIBRARY_DIRS} ${HDY_LIBRARY_DIRS} ${XML_LIBRARY_DIRS} ${GST_LIBRARY_DIRS})

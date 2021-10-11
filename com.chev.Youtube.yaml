@@ -1,6 +1,6 @@
 app-id: com.chev.Youtube
 runtime: org.gnome.Platform
-runtime-version: '40'
+runtime-version: '41'
 sdk: org.gnome.Sdk
 
 command: Youtube
@@ -15,11 +15,6 @@ finish-args:
 
 modules:
   - libadwaita.json
-  - name: libxml++
-    sources:
-     - type: archive
-       url: http://ftp.acc.umu.se/pub/GNOME/sources/libxml++/2.40/libxml++-2.40.1.tar.xz
-       sha256: 4ad4abdd3258874f61c2e2a41d08e9930677976d303653cd1670d3e9f35463e9
   - name: Youtube
     buildsystem: cmake
     config-opts:
@@ -27,4 +22,4 @@ modules:
     sources:
       - type: git
         url: https://github.com/radams15/YoutubeClient.git
-        commit: 2d368cb2d5e72d992641017ae1989bdedf965167
+        2d368cb2d5e72d992641017ae1989bdedf965167: commit

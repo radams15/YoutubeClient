@@ -6,8 +6,8 @@
 
 #include <iostream>
 
+#include <libxml++/libxml++.h>
 #include <libxml/parser.h>
-#include <libxml/tree.h>
 
 #include "Net.h"
 
@@ -62,24 +62,24 @@ std::string Channel::get_name() {
     return name;
 }
 
-#define STR_EQ(a, b) (!xmlStrcmp(a, (const xmlChar *) b))
+void make_video(const xmlpp::Node* node, Video* vid, int level){
+    for(auto i : node->get_children()){
+        auto key = i->get_name();
 
-void make_video(xmlNode* node, Video* vid, int level){
-    for(xmlNode* i=node->children; i!=NULL; i=i->next){
-        auto key = i->name;
-
-        if(STR_EQ(key, "group")){
+        if(key == "group"){
             make_video(i, vid, level+1);
-        } else if(STR_EQ(key, "link")){
-            vid->link = std::string((const char*) xmlGetProp(i, (const xmlChar*)"href"));
-        } else if(STR_EQ(key, "published")){
-            vid->publish_date = std::string((const char*) xmlNodeGetContent(i));
-        } else if(STR_EQ(key, "description")){
-            vid->description = std::string((const char*) xmlNodeGetContent(i));
-        } else if(STR_EQ(key, "thumbnail")){
-            vid->thumbnail = std::string((const char*) xmlGetProp(i, (const xmlChar*)"url"));
-        } else if(STR_EQ(key, "title")){
-            vid->title = std::string((const char*) xmlNodeGetContent(i));
+        } else if(key == "link"){
+            auto* nodeElement = dynamic_cast<const xmlpp::Element*>(i);
+            vid->link = nodeElement->get_attribute("href")->get_value();
+        } else if(key == "published"){
+            vid->publish_date = std::string((const char*) xmlNodeGetContent(i->cobj()));
+        } else if(key == "description"){
+            vid->description = std::string((const char*) xmlNodeGetContent(i->cobj()));
+        } else if(key == "thumbnail"){
+            auto* nodeElement = dynamic_cast<const xmlpp::Element*>(i);
+            vid->thumbnail = nodeElement->get_attribute("url")->get_value();
+        } else if(key == "title"){
+            vid->title = std::string((const char*) xmlNodeGetContent(i->cobj()));
         }
     }
 }
@@ -93,22 +93,17 @@ std::vector<Video*>* Channel::get_vids() {
         std::cerr << "FAIL to get data URL: RETURN " << res.status_code << std::endl;
         return nullptr;
     }
-    
-    xmlDoc* doc = NULL;
-    xmlNode* root = NULL;
-    
-    if(!(doc = xmlReadMemory(res.text.c_str(), res.text.size(), "", "utf-8", NULL))){
-        printf("error: could not parse data\n");
-        return out;
-    }
 
-    root = xmlDocGetRootElement(doc);
+    xmlpp::DomParser p;
+    p.parse_memory(res.text);
 
-    for(root=root->children; root!=NULL; root=root->next){
-        if(STR_EQ(root->name, "entry")){
+    auto root = p.get_document()->get_root_node();
+
+    for(auto i : root->get_children()){
+        if(i->get_name() == "entry"){
             auto* vid = new Video;
 
-            make_video(root, vid, 0);
+            make_video(i, vid, 0);
 
             out->push_back(vid);
         }
