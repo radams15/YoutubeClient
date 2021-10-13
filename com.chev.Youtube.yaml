@@ -6,20 +6,20 @@ sdk: org.gnome.Sdk
 command: Youtube
 
 finish-args: 
- - "--device=dri"
- - "--share=ipc"
- - "--socket=fallback-x11"
  - "--share=network"
  - "--socket=wayland"
- - "--socket=system-bus"
+ - "--socket=fallback-x11"
+ - "--share=network"
+ - "--socket=pulseaudio"
+ - "--device=dri"
 
 modules:
   - libadwaita.json
   - name: Youtube
-    buildsystem: cmake
+    buildsystem: cmake-ninja
     config-opts:
       - "-DCMAKE_BUILD_TYPE=Release"
     sources:
       - type: git
         url: https://github.com/radams15/YoutubeClient.git
-        commit: f632cb4d6153d562165b537cbe41cc07d41366e6
+        commit: 23a4ba5f76e0be45ce9dbbc3e8db13156274cc7a

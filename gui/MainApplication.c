@@ -109,8 +109,8 @@ void activate (GtkApplication* app, gpointer user_data){
     gtk_window_set_application(win, app);
     gtk_window_present(win);
 
-    load_feed();
-    load_subs();
+    /*load_feed();
+    load_subs();*/
 }
 
 int app_run (int argc, char **argv){
