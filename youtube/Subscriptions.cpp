@@ -18,6 +18,8 @@ Subscriptions::Subscriptions(std::string file) {
     if(fs::exists(file)){
         load();
     }
+    
+    std::cout << file << ", " << subs.length() << "\n";
 }
 
 void Subscriptions::load() {
@@ -73,8 +75,6 @@ std::vector<Video*>* Subscriptions::get_vids() {
 
     for(auto c : *subs){
         threads.push_back(0);
-        
-        std::cout << "Sub\n";
 
         auto* v = new VidData;
         v->c = c;
