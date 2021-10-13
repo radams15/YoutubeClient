@@ -24,7 +24,7 @@ public:
 
     std::vector<Channel*>* subs;
 
-    Subscriptions();
+    Subscriptions(std::string file);
 
     std::vector<Video*>* get_vids();
 

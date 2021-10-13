@@ -118,7 +118,7 @@ int app_run (int argc, char **argv){
     GtkApplication *app;
     int status;
 
-    subs = subs_new(CONF_DIR);
+    subs = subs_new();
 
     adw_init();
 

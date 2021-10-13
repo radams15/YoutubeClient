@@ -54,8 +54,8 @@ extern "C" CVideos channel_get_vids(void* channel){
     return out;
 }
 
-extern "C" CSubs* subs_new(const char* file){
-    auto* out = new Subscriptions(std::string(file));
+extern "C" CSubs* subs_new(){
+    auto* out = new Subscriptions();
 
     return (CSubs*) out;
 }

@@ -11,8 +11,8 @@
 
 namespace fs = std::filesystem;
 
-Subscriptions::Subscriptions(std::string file) {
-    this->file = file;
+Subscriptions::Subscriptions() {
+    this->file = CONF_DIR + std::string(getenv("HOME"));
     this->subs = new std::vector<Channel*>;
 
     if(fs::exists(file)){

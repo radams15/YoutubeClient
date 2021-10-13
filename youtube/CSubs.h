@@ -44,7 +44,7 @@ CVideos channel_get_vids(void* channel);
 const char* channel_get_name(void* channel);
 const char* channel_get_id(void* channel);
 
-CSubs* subs_new(const char* file);
+CSubs* subs_new();
 CChannels subs_get_channels(CSubs* subs);
 CVideos subs_get_videos(CSubs* subs);
 CFormats cvideo_get_formats(CVideo vid);

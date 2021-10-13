@@ -12,10 +12,10 @@ pkg_check_modules(XML REQUIRED libxml-2.0)
 
 if(${FLATPAK})
     add_compile_definitions(INSTALLED="/app/")
-    add_compile_definitions(CONF_DIR="~/.var/app/com.chev.Youtube/data/subs.json")
+    add_compile_definitions(CONF_DIR="/.var/app/com.chev.Youtube/data/subs.json")
 else()
     add_compile_definitions(INSTALLED="/usr/local/share/")
-    add_compile_definitions(CONF_DIR="~/.config/subs.json")
+    add_compile_definitions(CONF_DIR="/.config/subs.json")
 endif()
 
 include_directories(${CURL_INCLUDE_DIRS} ${GTK_INCLUDE_DIRS} ${GIO_INCLUDE_DIRS} ${GTKMM_INCLUDE_DIRS} ${HDY_INCLUDE_DIRS} ${XML_INCLUDE_DIRS} ${GST_INCLUDE_DIRS})
