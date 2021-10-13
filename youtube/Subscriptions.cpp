@@ -8,11 +8,15 @@
 #include <fstream>
 #include <iostream>
 
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+
 
 namespace fs = std::filesystem;
 
 Subscriptions::Subscriptions() {
-    this->file = std::string(getpwuid(getuid())->pw_dir) + CONF_DIR;
+    this->file = std::string(getpwuid(getuid())->pw_dir) + std::string(CONF_DIR);
     this->subs = new std::vector<Channel*>;
 
     if(fs::exists(file)){
