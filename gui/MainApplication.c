@@ -54,7 +54,7 @@ void del_sub_button_clicked(GtkButton* button, gpointer data){
 }
 
 void add_feed_item(CVideo* vid){
-    GtkBuilder* new_builder = gtk_builder_new_from_file(INSTALLED"Youtube/FeedBox.ui");
+    GtkBuilder* new_builder = gtk_builder_new_from_file(INSTALLED"share/Youtube/FeedBox.ui");
 
     GtkWidget* box = GTK_WIDGET(gtk_builder_get_object(new_builder, "main_box"));
 
@@ -70,7 +70,7 @@ void add_feed_item(CVideo* vid){
 }
 
 void add_sub_item(CChannel* chan){
-    GtkBuilder* new_builder = gtk_builder_new_from_file(INSTALLED"Youtube/SubBox.ui");
+    GtkBuilder* new_builder = gtk_builder_new_from_file(INSTALLED"share/Youtube/SubBox.ui");
 
     GtkWidget* box = GTK_WIDGET(gtk_builder_get_object(new_builder, "main_box"));
 
@@ -101,7 +101,7 @@ void load_subs(){
 }
 
 void activate (GtkApplication* app, gpointer user_data){
-    builder = gtk_builder_new_from_file(INSTALLED"Youtube/MainWindow.ui");
+    builder = gtk_builder_new_from_file(INSTALLED"share/Youtube/MainWindow.ui");
 
     GtkWindow* win = GTK_WINDOW(gtk_builder_get_object(builder, "window"));
     AdwSqueezer* squeezer = ADW_SQUEEZER(gtk_builder_get_object(builder, "squeezer"));
