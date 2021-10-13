@@ -110,15 +110,15 @@ void activate (GtkApplication* app, gpointer user_data){
     gtk_window_set_application(win, app);
     gtk_window_present(win);
 
-    /*load_feed();
-    load_subs();*/
+    load_feed();
+    load_subs();
 }
 
 int app_run (int argc, char **argv){
     GtkApplication *app;
     int status;
 
-    //subs = subs_new("~/.var/app/com.chev.Youtube/data/subs.json");
+    subs = subs_new(CONF_DIR);
 
     adw_init();
 
