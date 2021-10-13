@@ -20,5 +20,3 @@ target_link_libraries(Youtube ${CURL_LIBRARIES} ${GTK_LIBRARIES} ${GIO_LIBRARIES
 
 install(TARGETS Youtube
         RUNTIME DESTINATION bin)
-
-install(FILES ui/FeedBox.ui ui/MainWindow.ui ui/SubBox.ui DESTINATION share/Youtube)
