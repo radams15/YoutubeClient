@@ -117,7 +117,7 @@ int app_run (int argc, char **argv){
     GtkApplication *app;
     int status;
 
-    subs = subs_new("~/.var/app/com.chev.Youtube/data/subs.json");
+    //subs = subs_new("~/.var/app/com.chev.Youtube/data/subs.json");
 
     adw_init();
 
