@@ -24,4 +24,12 @@ modules:
     sources:
       - type: git
         url: https://github.com/radams15/YoutubeClient.git
-        commit: f866c066f27b4f2e733605a946e19bad5bf891dc
+        commit: 82384fd98b530acf6f5cd19ae5f9c99fcb3b725c
+  - name: yt-dlp
+    sources:
+     - type: file
+       url: "https://github.com/yt-dlp/yt-dlp/releases/download/2021.10.10/yt-dlp"
+       sha256: "5efc3ecdd106aea18158c3212cb136ab47d19a3958ea667c315d1cb03c5f25f0"
+    buildsystem: simple
+    build-commands:
+     - "install yt-dlp /app/bin/"

@@ -22,8 +22,6 @@ Subscriptions::Subscriptions() {
     if(fs::exists(file)){
         load();
     }
-    
-    std::cout << file << ", " << subs->size() << "\n";
 }
 
 void Subscriptions::load() {
