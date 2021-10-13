@@ -73,8 +73,6 @@ std::vector<Video*>* Subscriptions::get_vids() {
 
     for(auto c : *subs){
         threads.push_back(0);
-        
-        std::cout << "Sub\n";
 
         auto* v = new VidData;
         v->c = c;
