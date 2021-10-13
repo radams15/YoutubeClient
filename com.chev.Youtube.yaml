@@ -20,7 +20,8 @@ modules:
     buildsystem: cmake-ninja
     config-opts:
       - "-DCMAKE_BUILD_TYPE=Release"
+      - "-DFLATPAK=ON"
     sources:
       - type: git
         url: https://github.com/radams15/YoutubeClient.git
-        commit: 23a4ba5f76e0be45ce9dbbc3e8db13156274cc7a
+        commit: 589e80f46b0697b9f9abecade950a0268e742cd7
