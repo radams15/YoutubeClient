@@ -24,4 +24,4 @@ modules:
     sources:
       - type: git
         url: https://github.com/radams15/YoutubeClient.git
-        commit: c0f52508010e799b0f761249078a52630ae86918
+        commit: 9b33da6012b6168c13d97b6d8d46cc78cb3b60e8

@@ -19,7 +19,7 @@ Subscriptions::Subscriptions(std::string file) {
         load();
     }
     
-    std::cout << file << ", " << subs.length() << "\n";
+    std::cout << file << ", " << subs->length() << "\n";
 }
 
 void Subscriptions::load() {
