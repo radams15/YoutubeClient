@@ -12,7 +12,7 @@
 namespace fs = std::filesystem;
 
 Subscriptions::Subscriptions() {
-    this->file = CONF_DIR + std::string(getenv("HOME"));
+    this->file = CONF_DIR + std::string(getpwuid(getuid())->pw_dir);
     this->subs = new std::vector<Channel*>;
 
     if(fs::exists(file)){
