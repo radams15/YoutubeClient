@@ -12,7 +12,6 @@ finish-args:
  - "--share=network"
  - "--socket=pulseaudio"
  - "--device=dri"
- - "--socket=session-bus"
 
 modules:
   - libadwaita.json
