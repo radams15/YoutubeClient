@@ -14,7 +14,7 @@ if(${FLATPAK})
     add_compile_definitions(INSTALLED="/app/")
     add_compile_definitions(CONF_DIR="/.var/app/com.chev.Youtube/data/subs.json")
 else()
-    add_compile_definitions(INSTALLED="/usr/local/share/")
+    add_compile_definitions(INSTALLED="/usr/local/")
     add_compile_definitions(CONF_DIR="/.config/subs.json")
 endif()
 
