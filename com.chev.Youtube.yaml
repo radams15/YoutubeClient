@@ -15,7 +15,18 @@ finish-args:
  - "--socket=session-bus"
 
 modules:
-  - libadwaita.json
+  - name: libadwaita
+    buildsystem: meson
+    config-opts:
+     - "-Dexamples=false"
+     - "-Dtests=false"
+    build-options:
+     build-args:
+      - "--share=network"
+    sources:
+     - type: git
+       url: "https://gitlab.gnome.org/GNOME/libadwaita.git"
+       commit: "42051c3bb697f006d5a6d112eec37279c6835c85"
   - name: Youtube
     buildsystem: cmake-ninja
     config-opts:
