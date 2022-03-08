@@ -9,6 +9,7 @@ pkg_check_modules(CURL REQUIRED libcurl)
 pkg_check_modules(GIO REQUIRED gio-2.0)
 
 if(${FLATPAK})
+    add_compile_definitions(FLATPAK)
     add_compile_definitions(INSTALLED="/app/")
     add_compile_definitions(CONF_DIR="/.var/app/com.chev.Youtube/data/yt_saves.json")
 else()
@@ -16,7 +17,7 @@ else()
     add_compile_definitions(CONF_DIR="/.local/share/yt_saves.json")
 endif()
 
-add_subdirectory(libyoutube)
+add_subdirectory(libYT)
 
 include_directories(${YT_HEADER_DIR} ${GTK_INCLUDE_DIRS} ${GIO_INCLUDE_DIRS} ${HDY_INCLUDE_DIRS})
 link_directories(${GTK_LIBRARY_DIRS} ${GIO_LIBRARY_DIRS} ${HDY_LIBRARY_DIRS})
