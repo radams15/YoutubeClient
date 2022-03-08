@@ -1,0 +1,17 @@
+/usr/lib/yt/libyt.so.1.0.0
+/usr/lib/yt/libyt.so
+/usr/lib/yt/Channel.h
+/usr/lib/yt/Config.h
+/usr/lib/yt/Video.h
+/usr/lib/yt/Net.h
+/usr/lib/yt/Videos.h
+/usr/bin/ytplay
+/usr/include/yt/Channel.h
+/usr/include/yt/Config.h
+/usr/include/yt/Video.h
+/usr/include/yt/Net.h
+/usr/include/yt/Videos.h
+/usr/bin/Youtube
+/usr/share/Youtube/FeedBox.ui
+/usr/share/Youtube/MainWindow.ui
+/usr/share/Youtube/SubBox.ui

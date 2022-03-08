@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK REQUIRED gtk4)
 pkg_check_modules(CURL REQUIRED libcurl)
+pkg_check_modules(HDY REQUIRED libadwaita-1)
 pkg_check_modules(GIO REQUIRED gio-2.0)
 
 if(${FLATPAK})

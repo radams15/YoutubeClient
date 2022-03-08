@@ -35,7 +35,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/radams15/YoutubeClient.git
-        commit: 82384fd98b530acf6f5cd19ae5f9c99fcb3b725c
+        commit: b6bda4abfeb1046ee502dc725d9a53188ceb32a7
   - name: yt-dlp
     sources:
      - type: file
