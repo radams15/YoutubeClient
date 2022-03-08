@@ -10,6 +10,17 @@
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
+      <object class="GtkLabel" id="date_label_hidden">
+        <property name="visible">0</property>
+        <property name="can-focus">0</property>
+        <property name="halign">start</property>
+        <property name="label">0</property>
+        <style>
+          <class name="subtitle"/>
+        </style>
+      </object>
+    </child>
+    <child>
       <object class="GtkBox" id="source_box">
         <property name="visible">1</property>
         <property name="can-focus">0</property>

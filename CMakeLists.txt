@@ -7,24 +7,24 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK REQUIRED gtk4)
 pkg_check_modules(CURL REQUIRED libcurl)
 pkg_check_modules(GIO REQUIRED gio-2.0)
-pkg_check_modules(HDY REQUIRED libadwaita-1)
-pkg_check_modules(XML REQUIRED libxml-2.0)
 
 if(${FLATPAK})
     add_compile_definitions(INSTALLED="/app/")
-    add_compile_definitions(CONF_DIR="/.var/app/com.chev.Youtube/data/subs.json")
+    add_compile_definitions(CONF_DIR="/.var/app/com.chev.Youtube/data/yt_saves.json")
 else()
     add_compile_definitions(INSTALLED="/usr/local/")
-    add_compile_definitions(CONF_DIR="/.config/subs.json")
+    add_compile_definitions(CONF_DIR="/.local/share/yt_saves.json")
 endif()
 
-include_directories(${CURL_INCLUDE_DIRS} ${GTK_INCLUDE_DIRS} ${GIO_INCLUDE_DIRS} ${GTKMM_INCLUDE_DIRS} ${HDY_INCLUDE_DIRS} ${XML_INCLUDE_DIRS} ${GST_INCLUDE_DIRS})
-link_directories(${CURL_LIBRARY_DIRS} ${GTK_LIBRARY_DIRS} ${GIO_LIBRARY_DIRS} ${GTKMM_LIBRARY_DIRS} ${HDY_LIBRARY_DIRS} ${XML_LIBRARY_DIRS} ${GST_LIBRARY_DIRS})
+add_subdirectory(libyoutube)
 
-add_executable(Youtube main.c youtube/Channel.cpp youtube/Channel.h youtube/Video.cpp youtube/Video.h youtube/Subscriptions.cpp youtube/Subscriptions.h youtube/CSubs.cpp youtube/CSubs.h gui/MainApplication.c gui/MainApplication.h youtube/Net.cpp youtube/Net.h)
+include_directories(${YT_HEADER_DIR} ${GTK_INCLUDE_DIRS} ${GIO_INCLUDE_DIRS} ${HDY_INCLUDE_DIRS})
+link_directories(${GTK_LIBRARY_DIRS} ${GIO_LIBRARY_DIRS} ${HDY_LIBRARY_DIRS})
 
-add_definitions(${GTK_CFLAGS_OTHER} ${GIO_CFLAGS_OTHER} ${GTKMM_CFLAGS_OTHER} ${HDY_CFLAGS_OTHER} ${XML_CFLAGS_OTHER} ${GST_CFLAGS_OTHER})
-target_link_libraries(Youtube ${CURL_LIBRARIES} ${GTK_LIBRARIES} ${GIO_LIBRARIES} ${GTKMM_LIBRARIES} ${HDY_LIBRARIES} ${XML_LIBRARIES} ${GST_LIBRARIES} pthread)
+add_executable(Youtube main.c gui/MainApplication.c gui/MainApplication.h)
+
+add_definitions(${GTK_CFLAGS_OTHER} ${GIO_CFLAGS_OTHER} ${HDY_CFLAGS_OTHER})
+target_link_libraries(Youtube yt ${GTK_LIBRARIES} ${GIO_LIBRARIES} ${HDY_LIBRARIES})
 
 install(TARGETS Youtube
         RUNTIME DESTINATION bin)

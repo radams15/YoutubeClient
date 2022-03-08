@@ -6,7 +6,6 @@
 #define C_MAINAPPLICATION_H
 
 #include <gtk/gtk.h>
-#include <libadwaita-1/adwaita.h>
 
 static void activate(GtkApplication* app, gpointer user_data);
 
